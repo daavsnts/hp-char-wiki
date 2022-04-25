@@ -22,7 +22,7 @@ This is a simple <b>frontend project</b> with purpose to <b>test my pure skills 
 </br>
 
 <h2>👀 Preview</h2>
-<p align="center"><img src="https://raw.githubusercontent.com/daavsantos/hp-char-wiki/main/img/readme-preview.jpg"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/daavsantos/hp-char-wiki/main/img/previews/readme-preview.jpg"></p>
 
 
 </br>
