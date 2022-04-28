@@ -1,7 +1,7 @@
 <h1 align="center"><img src="https://raw.githubusercontent.com/daavsantos/hp-char-wiki/main/img/logo.png"></h1>
 
 <p align="center">A <b>web app</b> that <b>return data of the HP character you search</b>. </br>
-This is a simple <b>frontend project</b> with the purpose of testing my raw skills in JS, HTML and CSS.</b>.</br>
+This is a simple <b>frontend project</b> with the purpose of testing my raw skills in JS, HTML and CSS.</b></br>
 
 
 </br>
