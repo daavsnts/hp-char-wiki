@@ -88,7 +88,7 @@ const fetchCharacters = async () => {
     return await response.json()
 }
 
-const updateLocalStorage = characters => localStorage.setItem('characters', JSON.stringify(characters))
+const addCharactersToLocalStorage = characters => localStorage.setItem('characters', JSON.stringify(characters))
 
 const getCharactersFromLocalStorage = () => JSON.parse(localStorage.getItem('characters'))
 
@@ -96,7 +96,7 @@ const getCharacter = async (searchedName) => {
 
     if (!getCharactersFromLocalStorage()) {
         const characters = await fetchCharacters()
-        updateLocalStorage(characters)
+        addCharactersToLocalStorage(characters)
         return findCharacter(characters, searchedName)
     }
 
