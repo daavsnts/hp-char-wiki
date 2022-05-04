@@ -95,7 +95,9 @@ const getCharactersFromLocalStorage = () => JSON.parse(localStorage.getItem('cha
 const getCharacter = async (searchedName) => {
 
     if (!getCharactersFromLocalStorage()) {
-        const characters = await fetchCharacters()
+        const characters = null
+        if (!characters) throw `API Off-line!`
+
         addCharactersToLocalStorage(characters)
         return findCharacter(characters, searchedName)
     }
