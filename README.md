@@ -10,7 +10,7 @@ This is a simple <b>frontend project</b> with the purpose of testing my raw skil
 <ul>
   <li>No frameworks or libs used in this project (<b>100% pure</b>).</li>
   <li>The <a href="https://github.com/KostaSav/hp-api">HP-API</a> is used to <b>get the data from the characters</b>.</li>
-  <li> I added localStorage to store the fetch of the characters, avoiding many requests to the API.</li>
+  <li> I added <b>localStorage</b> to store the fetch of the characters, <b>avoiding many requests to the API</b>.</li>
   <li>Some characters <b>have missing data</b>, so the character you search is <b>treated by a function</b> before is inserted into page.</li>
   <li>I tried to <b>write</b> this code to be the most <b>functional and clean as possible</b>, <b>according to my knowledge</b>.</li>
   <li>The app is made to be <b>responsive</b>.</li>
