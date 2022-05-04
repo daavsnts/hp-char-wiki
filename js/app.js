@@ -73,39 +73,6 @@ const setCharacterFromPage = character => {
     houseInfoElement.innerHTML = getCharacterHouseHTML(character)
 }
 
-const findCharacter = (characters, searchedName) => {
-    const character = characters.find(character => character.name === searchedName)
-
-    if (!character)
-        throw `Character not found!`
-
-    return character
-}
-
-const fetchCharacters = async () => {
-    const url = `http://hp-api.herokuapp.com/api/characters`
-    const response = await fetch(url)
-    return await response.json()
-}
-
-const addCharactersToLocalStorage = characters => localStorage.setItem('characters', JSON.stringify(characters))
-
-const getCharactersFromLocalStorage = () => JSON.parse(localStorage.getItem('characters'))
-
-const getCharacter = async (searchedName) => {
-
-    if (!getCharactersFromLocalStorage()) {
-        const characters = null
-        if (!characters) throw `API Off-line!`
-
-        addCharactersToLocalStorage(characters)
-        return findCharacter(characters, searchedName)
-    }
-
-    const characters = getCharactersFromLocalStorage()
-    return findCharacter(characters, searchedName)
-}
-
 const fillEmptyProps = characterCopy => {
     Object.keys(characterCopy).forEach(prop => {
         const propIsEmpty = characterCopy[prop] === ''
@@ -127,10 +94,51 @@ const fillEmptyProps = characterCopy => {
 }
 
 const treatCharacter = character => {
-    let characterCopy = JSON.parse(JSON.stringify(character))
-    fillEmptyProps(characterCopy)
+    const characterCopy = JSON.parse(JSON.stringify(character))
 
-    return JSON.parse(JSON.stringify(characterCopy))
+    fillEmptyProps(characterCopy)
+    addToLocalStorage(character.name, characterCopy)
+
+    return characterCopy
+}
+
+const findCharacter = (characters, searchedName) => {
+    const character = characters.find(character => character.name === searchedName)
+
+    if (!character) throw `Character not found!`
+
+    return treatCharacter(character)
+}
+
+const fetchCharacters = async () => {
+    const url = `http://hp-api.herokuapp.com/api/characters`
+    const response = await fetch(url)
+    return await response.json()
+}
+
+const addToLocalStorage = (type, thing) => localStorage.setItem(type, JSON.stringify(thing))
+
+const getFromLocalStorage = name => JSON.parse(localStorage.getItem(name))
+
+const getCharacter = async (searchedName) => {
+    const charIsNotInLocalStorage = !getFromLocalStorage(searchedName)
+    const allCharsAreNotInLocalStorage = !getFromLocalStorage('all-characters')
+
+    if (charIsNotInLocalStorage) {
+        if (allCharsAreNotInLocalStorage) {
+            const allCharacters = await fetchCharacters()
+
+            if (!allCharacters) throw `API Off-line!`
+
+            addToLocalStorage('all-characters', allCharacters)
+            return findCharacter(allCharacters, searchedName)
+        }
+
+        const allCharacters = getFromLocalStorage('all-characters')
+        return findCharacter(allCharacters, searchedName)
+    }
+
+    return getFromLocalStorage(searchedName)
 }
 
 const handleFormSubmit = async (event) => {
@@ -152,8 +160,7 @@ const app = async (event) => {
     try {
         const searchedName = await handleFormSubmit(event)
         const character = await getCharacter(searchedName)
-        const treatedCharacter = treatCharacter(character)
-        setCharacterFromPage(treatedCharacter)
+        setCharacterFromPage(character)
     } catch (error) {
         setErrorHTML(error)
     }
