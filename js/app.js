@@ -116,16 +116,16 @@ const fetchCharacters = async () => {
     return await response.json()
 }
 
-const addToLocalStorage = (type, thing) => localStorage.setItem(type, JSON.stringify(thing))
+const addToLocalStorage = (type, object) => localStorage.setItem(type, JSON.stringify(object))
 
 const getFromLocalStorage = name => JSON.parse(localStorage.getItem(name))
 
 const getCharacter = async (searchedName) => {
     const charIsNotInLocalStorage = !getFromLocalStorage(searchedName)
-    const allCharsAreNotInLocalStorage = !getFromLocalStorage('all-characters')
+    const emptyLocalStorage = !getFromLocalStorage('all-characters')
 
     if (charIsNotInLocalStorage) {
-        if (allCharsAreNotInLocalStorage) {
+        if (emptyLocalStorage) {
             const allCharacters = await fetchCharacters()
 
             if (!allCharacters) throw `API Off-line!`
