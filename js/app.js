@@ -9,37 +9,38 @@ const infoElement = document.querySelector('#character-info')
 const houseInfoElement = document.querySelector('#character-house')
 
 const getCharacterHouseHTML = ({ house }) => {
-    switch (house) {
-        case '?':
-            return `<img src="./img/houses/no-house-logo.png">
-            <p>No information given about the character house.</p>`
-        case 'Gryffindor':
-            return `<img src="./img/houses/gryffindor-logo.png">
-            <p>Gryffindor was one of the four Houses of Hogwarts School of Witchcraft and Wizardry and was founded by Godric Gryffindor. 
-            Gryffindor instructed the Sorting Hat to choose students possessing characteristics he most valued, 
-            such as courage, chivalry, nerve and determination, to be sorted into his house. </br></br>
-            The emblematic animal was a lion, and its colours were scarlet and gold. Sir Nicholas de Mimsy-Porpington, 
-            also known as "Nearly Headless Nick", was the House ghost.</p>`
-        case 'Slytherin':
-            return `<img src="./img/houses/slytherin-logo.png">
+    const housesHTML = {
+        '?': `<img src="./img/houses/no-house-logo.png">
+        <p>No information given about the character house.</p>`,
+
+        'Gryffindor': `<img src="./img/houses/gryffindor-logo.png">
+        <p>Gryffindor was one of the four Houses of Hogwarts School of Witchcraft and Wizardry and was founded by Godric Gryffindor. 
+        Gryffindor instructed the Sorting Hat to choose students possessing characteristics he most valued, 
+        such as courage, chivalry, nerve and determination, to be sorted into his house. </br></br>
+        The emblematic animal was a lion, and its colours were scarlet and gold. Sir Nicholas de Mimsy-Porpington, 
+        also known as "Nearly Headless Nick", was the House ghost.</p>` ,
+
+        'Slytherin': `<img src="./img/houses/slytherin-logo.png">
             <p>Slytherin was one of the four Houses at Hogwarts School of Witchcraft and Wizardry, founded by Salazar Slytherin. 
             In establishing the house, Salazar instructed the Sorting Hat to pick students who had a few particular characteristics he most valued. 
             Those characteristics included cunning, resourcefulness, leadership, and ambition. </br></br>
-            The emblematic animal of the house was a snake and the house's colours were green and silver. </p>`
-        case 'Ravenclaw':
-            `<img src="./img/houses/ravenclaw-logo.png">
+            The emblematic animal of the house was a snake and the house's colours were green and silver. </p>`,
+
+        'Ravenclaw': `<img src="./img/houses/ravenclaw-logo.png">
             <p>Ravenclaw was one of the four Houses of Hogwarts School of Witchcraft and Wizardry. 
             Its founder was the medieval witch Rowena Ravenclaw. 
             Members of this house were characterised by their wit, learning, and wisdom. </br></br>
-            The emblematic animal symbol was an eagle, and blue and bronze were its colours.</p>`
-        case 'Hufflepuff':
-            return `<img src="./img/houses/hufflepuff-logo.png">
+            The emblematic animal symbol was an eagle, and blue and bronze were its colours.</p>`,
+
+        'Hufflepuff': `<img src="./img/houses/hufflepuff-logo.png">
             <p>Hufflepuff was one of the four Houses of Hogwarts School of Witchcraft and Wizardry.
             Its founder was the medieval witch Helga Hufflepuff. 
             Hufflepuff was the most inclusive among the four houses, valuing hard work, dedication, patience, loyalty, 
             and fair play rather than a particular aptitude in its members.</br></br>
             The emblematic animal was a badger, and yellow and black were its house colours. </p>`
     }
+
+    return housesHTML[house]
 }
 
 const getCharacterInfoHTML = ({ species, dateOfBirth, gender, ancestry, wand: { wood, core }, patronus, house }) => {
