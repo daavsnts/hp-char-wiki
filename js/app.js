@@ -76,10 +76,10 @@ const setCharacterFromPage = character => {
 
 const fillEmptyProps = characterCopy => {
     Object.keys(characterCopy).forEach(prop => {
-        const propIsEmpty = characterCopy[prop] === ''
-        const imageProp = prop == 'image'
-        const nestedObject = typeof characterCopy[prop] === 'object'
-        const propNotNull = characterCopy[prop] !== null
+        const propIsEmpty = (characterCopy[prop] === '')
+        const imageProp = (prop == 'image')
+        const nestedObject = (typeof characterCopy[prop] === 'object')
+        const propNotNull = (characterCopy[prop] !== null)
 
         if (propIsEmpty) {
             if (imageProp) {
@@ -121,16 +121,58 @@ const addToLocalStorage = (type, object) => localStorage.setItem(type, JSON.stri
 
 const getFromLocalStorage = name => JSON.parse(localStorage.getItem(name))
 
-const getCharacter = async (searchedName) => {
-    const charIsNotInLocalStorage = !getFromLocalStorage(searchedName)
-    const emptyLocalStorage = !getFromLocalStorage('all-characters')
+const checkLocalStorageUpdateDate = (realTime) => {
+    const LocalStorageUpdateDate = getFromLocalStorage('last-update-date')
+    if (!LocalStorageUpdateDate) return false
 
-    if (charIsNotInLocalStorage) {
-        if (emptyLocalStorage) {
+    const { year: nowYear, month: nowMonth, day: nowDay, hours: nowHours, minutes: nowMinutes } = realTime
+    const { year: storageYear, month: storageMonth, day: storageDay, hours: storageHours, minutes: storageMinutes } = LocalStorageUpdateDate
+
+    const passedYear = (nowYear > storageYear)
+    const sameYear = (nowYear == storageYear)
+    const passedMonth = (nowMonth > storageMonth)
+    const sameMonth = (nowMonth == storageMonth)
+    const passedDay = (nowDay > storageDay)
+    const sameDay = (nowDay == storageDay)
+    const passedHour = (nowHours > storageHours)
+    const sameHour = (nowHours == storageHours)
+    const passedMinutes = (nowMinutes > storageMinutes)
+    
+    if (passedYear) return true 
+    if (sameYear && passedMonth) return true
+    if (sameMonth && passedDay) return true
+    if (sameDay && passedHour) return true
+    if (sameHour && passedMinutes) return true
+
+    return false
+}
+
+const createDate = () => {
+    const date = new Date()
+
+    return {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+        hours: date.getHours(),
+        minutes: date.getMinutes()
+    }
+}
+
+const getCharacter = async (searchedName) => {
+    const charIsNotInLocalStorage = (!getFromLocalStorage(searchedName))
+    const emptyLocalStorage = (!getFromLocalStorage('all-characters'))
+
+    const todayDate = createDate()
+    const storageUpdated = checkLocalStorageUpdateDate(todayDate) 
+
+    if (charIsNotInLocalStorage || !storageUpdated) {
+        if (emptyLocalStorage || !storageUpdated) {
             const allCharacters = await fetchCharacters()
 
             if (!allCharacters) throw `API Off-line!`
 
+            addToLocalStorage('last-update-date', todayDate)
             addToLocalStorage('all-characters', allCharacters)
             return findCharacter(allCharacters, searchedName)
         }
