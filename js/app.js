@@ -121,7 +121,7 @@ const addToLocalStorage = (type, object) => localStorage.setItem(type, JSON.stri
 
 const getFromLocalStorage = name => JSON.parse(localStorage.getItem(name))
 
-const checkLocalStorageUpdateDate = (realTime) => {
+const checkIfLocalStorageIsUpdated = (realTime) => {
     const LocalStorageUpdateDate = getFromLocalStorage('last-update-date')
     if (!LocalStorageUpdateDate) return false
 
@@ -138,13 +138,13 @@ const checkLocalStorageUpdateDate = (realTime) => {
     const sameHour = (nowHours == storageHours)
     const passedMinutes = (nowMinutes > storageMinutes)
     
-    if (passedYear) return true 
-    if (sameYear && passedMonth) return true
-    if (sameMonth && passedDay) return true
-    if (sameDay && passedHour) return true
-    if (sameHour && passedMinutes) return true
+    if (passedYear) return false 
+    if (sameYear && passedMonth) return false
+    if (sameMonth && passedDay) return false
+    if (sameDay && passedHour) return false
+    if (sameHour && passedMinutes) return false
 
-    return false
+    return true
 }
 
 const createDate = () => {
@@ -164,7 +164,9 @@ const getCharacter = async (searchedName) => {
     const emptyLocalStorage = (!getFromLocalStorage('all-characters'))
 
     const todayDate = createDate()
-    const storageUpdated = checkLocalStorageUpdateDate(todayDate) 
+    console.log(todayDate)
+    const storageUpdated = checkIfLocalStorageIsUpdated(todayDate) 
+    console.log(storageUpdated)
 
     if (charIsNotInLocalStorage || !storageUpdated) {
         if (emptyLocalStorage || !storageUpdated) {
