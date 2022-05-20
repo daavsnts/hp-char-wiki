@@ -15,6 +15,7 @@ This is a simple <b>frontend project</b> with the purpose of testing my raw skil
   <li>Some characters <b>have missing data</b>, so the character you search is <b>treated by a function</b> before is inserted into page.</li>
   <li>I tried to <b>write</b> this code to be the most <b>functional and clean as possible</b>, <b>according to my knowledge</b>.</li>
   <li>The app is made to be <b>responsive</b>.</li>
+  <li>You may <b>receive CORS errors</b> because the app is not running on a <b>web-server</b>.</li>
 </ul>
 
 </br>
