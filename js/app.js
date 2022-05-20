@@ -164,9 +164,7 @@ const getCharacter = async (searchedName) => {
     const emptyLocalStorage = (!getFromLocalStorage('all-characters'))
 
     const todayDate = createDate()
-    console.log(todayDate)
     const storageUpdated = checkIfLocalStorageIsUpdated(todayDate) 
-    console.log(storageUpdated)
 
     if (charIsNotInLocalStorage || !storageUpdated) {
         if (emptyLocalStorage || !storageUpdated) {
