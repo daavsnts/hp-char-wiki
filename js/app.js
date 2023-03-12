@@ -112,7 +112,7 @@ const findCharacter = (characters, searchedName) => {
 }
 
 const fetchCharacters = async () => {
-    const url = `http://hp-api.herokuapp.com/api/characters`
+    const url = `https://hp-api.onrender.com/api/characters`
     const response = await fetch(url)
     return await response.json()
 }
